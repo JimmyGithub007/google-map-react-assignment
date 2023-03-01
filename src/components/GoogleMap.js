@@ -1,22 +1,21 @@
-import { Card, Grow } from '@mui/material';
+import { Card } from '@mui/material';
 import { useRef, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import styled from '@emotion/styled';
-import withGoogleMaps from './HOC/withGoogleMaps';
 
 const MuiCard = styled(Card)({
     borderRadius: "15px",
 });
 
-const GoogleMap = ({ googleMaps }) => {
-    const { place } = useSelector(state => state.places);
+const GoogleMap = () => {
+    const { googleMaps, place } = useSelector(state => state.places);
     const [ map, setMap ] = useState(null); 
     const [ marker, setMarker ] = useState(null); 
     const googleMapRef = useRef(null);
 
     useEffect(() => {
-        if(map && place.lat && place.lng){ 
+        if(googleMaps && map && place.lat && place.lng){ 
             map.setCenter(place);
             if(marker) {
                 marker.setPosition(place);
@@ -27,18 +26,19 @@ const GoogleMap = ({ googleMaps }) => {
                 }));
             }
         }
-    }, [googleMaps, place, map, marker])
+    }, [googleMaps, map, marker, place])
 
     useEffect(() => {
+        if(!googleMaps) return;
         setMap(new googleMaps.Map(googleMapRef.current, {
             center: { lat: 3.1473265, lng: 101.6988555 },
             zoom: 11,
         }));
     }, [googleMaps]);
 
-    return (<Grow in={true}><MuiCard>
+    return (<MuiCard>
         <div ref={googleMapRef} style={{ height: '500px', width: 'calc(100vw - 40px)' }}></div>
-    </MuiCard></Grow>);
+    </MuiCard>);
 };
 
-export default withGoogleMaps(GoogleMap);
+export default GoogleMap;

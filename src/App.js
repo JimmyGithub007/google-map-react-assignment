@@ -1,37 +1,40 @@
-import { Grid, Typography } from "@mui/material";
-import { HistoryOutlined, MapOutlined } from "@mui/icons-material";
+import { Badge, CircularProgress, Drawer, Fab, Grid, Grow, IconButton, Typography } from "@mui/material";
+import { Close, HistoryOutlined, HistoryRounded, MapOutlined } from "@mui/icons-material";
+import { useSelector } from "react-redux";
 
 import styled from "@emotion/styled";
 import GoogleMap from "./components/GoogleMap";
 import History from "./components/History";
 import PlacesAutoComplete from "./components/PlacesAutoComplete";
+import withGoogleMaps from "./hoc/withGoogleMaps";
 import './App.css';
+import { useState } from "react";
 
 const MuiShadowTypography = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+  position: "relative",
+  textAlign: "center",
+  width: "100%",
+  '.MuiTypography-root:nth-of-type(2)': {
+    alignItems: "center",
+    color: "#e8eaed82",
     display: "flex",
-    justifyContent: "center",
-    position: "relative",
-    textAlign: "center",
-    width: "100%",
-    '.MuiTypography-root:nth-of-type(2)': {
-      alignItems: "center",
-      color: "#e8eaed82",
-      display: "flex",
-      fontSize: "25px",
-      fontWeight: "900",
-      position: "absolute",
-      top: "8px",
-      zIndex: "-1",
-      'svg': {
-        fontSize: "inherit",
-      },
-      '@media (min-width: 480px)': {
-        fontSize: "40px"
-      },
-      '@media (min-width: 768px)': {
-        fontSize: "45px"
-      }
+    fontSize: "25px",
+    fontWeight: "900",
+    position: "absolute",
+    top: "8px",
+    zIndex: "-1",
+    'svg': {
+      fontSize: "inherit",
+    },
+    '@media (min-width: 480px)': {
+      fontSize: "40px"
+    },
+    '@media (min-width: 768px)': {
+      fontSize: "45px"
     }
+  }
 });
 
 const MuiTypography = styled(Typography)({
@@ -59,35 +62,96 @@ const MuiTypography = styled(Typography)({
   }
 });
 
+const MuiFloatButton = styled(Fab)({
+  position: 'absolute',
+  bottom: 16,
+  right: 16,
+  '.MuiBadge-badge': {
+    top: "-6px",
+    left: "-5px",
+    height: "25px",
+    width: "25px",
+    borderRadius: "100%",
+  }
+});
+
+const MuiDrawer = styled(Drawer)({
+  '.MuiDrawer-paper': {
+    width: "100vw",
+    '@media (min-width: 576px)': {
+      width: "500px"
+    }
+  }
+});
+
 const App = () => {
-  return (<Grid
-    container
-    direction="column"
-    justifyContent="center"
-    alignItems="center"
-    gap={1}
-  >
-    <MuiShadowTypography>
-      <MuiTypography>
-        <b>G</b><b>o</b><b>o</b><b>g</b><b>l</b><b>e</b> 
-        <b> Places</b><b> A</b><b>u</b><b>t</b><b>o</b><b>c</b><b>o</b><b>mplete</b>
-      </MuiTypography>
-      <Typography>
-        <MapOutlined /> Google Places Autocomplete
-      </Typography>
-    </MuiShadowTypography>
-    <PlacesAutoComplete />
-    <GoogleMap />
-    <MuiShadowTypography>
-      <MuiTypography>
-        <b>H</b><b>i</b><b>s</b><b>t</b><b>o</b><b>r</b><b>y</b>
-      </MuiTypography>
-      <Typography>
-        <HistoryOutlined /> Your Search History
-      </Typography>
-    </MuiShadowTypography>
-    <History />
-  </Grid>);
+  const { history, loading } = useSelector(state => state.places);
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Grid
+      container
+      alignItems={loading ? "center" : "start"}
+      justifyContent="center"
+      sx={{ minHeight: "100vh" }}
+    >
+      {loading ? <CircularProgress /> :
+        <Grow in={true}>
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            gap={1}
+            sx={{ padding: "20px" }}
+          >
+            <MuiShadowTypography>
+              <MuiTypography>
+                <b>G</b><b>o</b><b>o</b><b>g</b><b>l</b><b>e</b>
+                <b> Places</b><b> A</b><b>u</b><b>t</b><b>o</b><b>c</b><b>o</b><b>mplete</b>
+              </MuiTypography>
+              <Typography>
+                <MapOutlined /> Google Places Autocomplete
+              </Typography>
+            </MuiShadowTypography>
+            <PlacesAutoComplete />
+            <GoogleMap />
+          </Grid>
+        </Grow>
+      }
+      <Grow in={!loading}>
+        <MuiFloatButton size="medium" color="primary" aria-label="history" onClick={() => setOpen(true)}>
+          <Badge 
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+            badgeContent={history.length} 
+            color="warning"
+            max={99}
+          >
+            <HistoryRounded />
+          </Badge>
+        </MuiFloatButton>
+      </Grow>
+      <MuiDrawer
+        anchor="right"
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        <IconButton color="primary" sx={{ height: "40px", width: "40px" }} onClick={() => setOpen(false)}>
+          <Close />
+        </IconButton>
+        <MuiShadowTypography>
+          <MuiTypography>
+            <b>H</b><b>i</b><b>s</b><b>t</b><b>o</b><b>r</b><b>y</b>
+          </MuiTypography>
+          <Typography>
+            <HistoryOutlined /> Your Search History
+          </Typography>
+        </MuiShadowTypography>
+        <History />
+      </MuiDrawer>
+    </Grid>);
 }
 
-export default App;
+export default withGoogleMaps(App);

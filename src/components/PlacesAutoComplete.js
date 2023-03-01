@@ -1,12 +1,10 @@
 import { useEffect, useRef } from "react";
-import { useDispatch } from 'react-redux';
-import { Grow, InputAdornment, TextField } from "@mui/material";
+import { useDispatch, useSelector } from 'react-redux';
+import { InputAdornment, TextField } from "@mui/material";
 import { SearchOutlined } from '@mui/icons-material';
 import { styled } from "@mui/system";
+import { addHistory, setPlace } from "../store/slice/placesSlice"
 import moment from 'moment';
-
-import withGoogleMaps from "./HOC/withGoogleMaps";
-import { addHistory, setPlace } from "../redux/slice/placesSlice"
 
 const AutoCompleteField = styled(TextField)({
     width: "100%",
@@ -18,11 +16,13 @@ const AutoCompleteField = styled(TextField)({
     }
 });
 
-const PlacesAutoComplete = ({ googleMaps }) => {
+const PlacesAutoComplete = () => {
+    const { googleMaps } = useSelector(state => state.places);
     const autoCompleteRef = useRef(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if (!googleMaps) return;
         const autocomplete = new googleMaps.places.Autocomplete(autoCompleteRef.current);
         autocomplete.setFields(["address_component", "geometry"]);
         autocomplete.addListener("place_changed", () => {
@@ -39,21 +39,19 @@ const PlacesAutoComplete = ({ googleMaps }) => {
         });
     }, [googleMaps, dispatch])
 
-    return (<Grow in={true}>
-        <AutoCompleteField
-            fullWidth
-            label="Enter a location"
-            placeholder="Enter a location"
-            inputRef={autoCompleteRef}
-            InputProps={{
-                endAdornment: (
-                    <InputAdornment position="start">
-                        <SearchOutlined />
-                    </InputAdornment>
-                )
-            }}
-        />
-    </Grow>)
+    return (<AutoCompleteField
+        fullWidth
+        label="Enter a location"
+        placeholder="Enter a location"
+        inputRef={autoCompleteRef}
+        InputProps={{
+            endAdornment: (
+                <InputAdornment position="start">
+                    <SearchOutlined />
+                </InputAdornment>
+            )
+        }}
+    />)
 }
 
-export default withGoogleMaps(PlacesAutoComplete);
+export default PlacesAutoComplete;

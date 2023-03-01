@@ -2,7 +2,7 @@ import { Card, Collapse, Grow, IconButton, List, ListItem, ListItemText, Typogra
 import { useDispatch, useSelector } from 'react-redux';
 import { AccessTimeFilled, Delete, NearMe, Place } from '@mui/icons-material';
 import { TransitionGroup } from 'react-transition-group';
-import { removeHistory, setPlace } from '../redux/slice/placesSlice';
+import { removeHistory, setPlace } from '../store/slice/placesSlice';
 
 import React from 'react';
 import styled from '@emotion/styled';
@@ -10,17 +10,10 @@ import styled from '@emotion/styled';
 const MuiCard = styled(Card)({
     borderRadius: "15px",
     marginBottom: "10px",
-    width: "100%",
-    '@media (min-width: 768px)': {
-        width: "500px"
-    }
 });
 
 const MuiDiv = styled("div")({
-    width: "100%",
-    '@media (min-width: 768px)': {
-        width: "500px"
-    }
+    padding: "0 20px"
 });
 
 const MuiSpan = styled("span")({
