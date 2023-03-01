@@ -1,4 +1,4 @@
-import { Card } from '@mui/material';
+import { Card, Grow } from '@mui/material';
 import { useRef, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -36,9 +36,9 @@ const GoogleMap = ({ googleMaps }) => {
         }));
     }, [googleMaps]);
 
-    return (<MuiCard>
-        <div ref={googleMapRef} style={{ height: '100px', width: 'calc(100vw - 50px)' }}></div>
-    </MuiCard>);
+    return (<Grow in={true}><MuiCard>
+        <div ref={googleMapRef} style={{ height: '500px', width: 'calc(100vw - 40px)' }}></div>
+    </MuiCard></Grow>);
 };
 
 export default withGoogleMaps(GoogleMap);

@@ -10,8 +10,11 @@ export const placesSlice = createSlice({
         },
     },
     reducers: {
-        setHistory: (state, action) => {
+        addHistory: (state, action) => {
             state.history.unshift(action.payload);
+        },
+        removeHistory: (state, action) => {
+            state.history.splice(action.payload, 1);
         },
         setPlace: (state, action) => {
             state.place = action.payload;
@@ -19,5 +22,5 @@ export const placesSlice = createSlice({
     }
 });
 
-export const { setHistory, setPlace } = placesSlice.actions;
+export const { addHistory, removeHistory, setPlace } = placesSlice.actions;
 export default placesSlice.reducer;

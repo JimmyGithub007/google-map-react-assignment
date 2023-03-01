@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
-import { InputAdornment, TextField } from "@mui/material";
-import { MapOutlined } from '@mui/icons-material';
+import { Grow, InputAdornment, TextField } from "@mui/material";
+import { SearchOutlined } from '@mui/icons-material';
 import { styled } from "@mui/system";
 import moment from 'moment';
 
 import withGoogleMaps from "./HOC/withGoogleMaps";
-import { setHistory, setPlace } from "../redux/slice/placesSlice"
+import { addHistory, setPlace } from "../redux/slice/placesSlice"
 
 const AutoCompleteField = styled(TextField)({
     width: "100%",
@@ -31,7 +31,7 @@ const PlacesAutoComplete = ({ googleMaps }) => {
             const lng = place.geometry.location.lng();
 
             dispatch(setPlace({ lat, lng }));
-            dispatch(setHistory({
+            dispatch(addHistory({
                 address: autoCompleteRef.current.value,
                 location: { lat, lng },
                 time: moment().format('MMMM Do YYYY, h:mm:ss a')
@@ -39,7 +39,7 @@ const PlacesAutoComplete = ({ googleMaps }) => {
         });
     }, [googleMaps, dispatch])
 
-    return (
+    return (<Grow in={true}>
         <AutoCompleteField
             fullWidth
             label="Enter a location"
@@ -48,11 +48,12 @@ const PlacesAutoComplete = ({ googleMaps }) => {
             InputProps={{
                 endAdornment: (
                     <InputAdornment position="start">
-                        <MapOutlined />
+                        <SearchOutlined />
                     </InputAdornment>
                 )
             }}
-        />)
+        />
+    </Grow>)
 }
 
 export default withGoogleMaps(PlacesAutoComplete);
