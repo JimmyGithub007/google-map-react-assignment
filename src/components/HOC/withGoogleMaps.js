@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
+
+const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
 
 const withGoogleMaps = (Component) => {
   const WithGoogleMaps = (props) => {
@@ -7,8 +9,8 @@ const withGoogleMaps = (Component) => {
 
     useEffect(() => {
       const loader = new Loader({
-        apiKey: 'AIzaSyBPOOWbwJf6UxYSUV7Z68dEjwGV-jvbyyo',
-        version: 'weekly',
+        apiKey: API_KEY,
+        version: "weekly",
         libraries: ["places"]
       });
 
@@ -18,7 +20,7 @@ const withGoogleMaps = (Component) => {
     }, []);
 
     if (!googleMaps) {
-      return null; // or render a loading spinner
+      return null;
     }
 
     return <Component googleMaps={googleMaps} {...props} />;
