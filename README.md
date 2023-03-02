@@ -1,4 +1,4 @@
-# vantage-code-challenge
+# Maybank React Assignment
 
 An mobile responsive application which use Google Place Autocomplete to find places and show at map
 
@@ -30,7 +30,3 @@ To Start Server:
 To Visit App:
 
 `localhost:3000`
-
-To Start Server:
-
-`npm run build`
