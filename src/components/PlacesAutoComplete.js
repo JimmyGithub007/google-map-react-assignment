@@ -1,20 +1,10 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { InputAdornment, TextField } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 import { SearchOutlined } from '@mui/icons-material';
-import { styled } from "@mui/system";
 import { addHistory, setPlace } from "../store/slice/placesSlice"
+import { MuiAutoCompleteField } from "../styles/Global";
 import moment from 'moment';
-
-const AutoCompleteField = styled(TextField)({
-    width: "100%",
-    '& .MuiOutlinedInput-notchedOutline': {
-        borderRadius: "15px",
-    },
-    '@media (min-width: 768px)': {
-        width: "500px"
-    }
-});
 
 const PlacesAutoComplete = () => {
     const { googleMaps } = useSelector(state => state.places);
@@ -39,7 +29,7 @@ const PlacesAutoComplete = () => {
         });
     }, [googleMaps, dispatch])
 
-    return (<AutoCompleteField
+    return (<MuiAutoCompleteField
         fullWidth
         label="Enter a location"
         placeholder="Enter a location"

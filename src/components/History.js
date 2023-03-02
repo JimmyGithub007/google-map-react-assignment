@@ -1,26 +1,10 @@
-import { Card, Collapse, Grow, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Collapse, Grow, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { AccessTimeFilled, Delete, NearMe, Place } from '@mui/icons-material';
 import { TransitionGroup } from 'react-transition-group';
 import { removeHistory, setPlace } from '../store/slice/placesSlice';
-
+import { MuiCard, MuiDiv, MuiSpan } from '../styles/Global';
 import React from 'react';
-import styled from '@emotion/styled';
-
-const MuiCard = styled(Card)({
-    borderRadius: "15px",
-    marginBottom: "10px",
-});
-
-const MuiDiv = styled("div")({
-    padding: "0 20px"
-});
-
-const MuiSpan = styled("span")({
-    display: "flex",
-    alignItems: "center",
-    gap: "5px",
-});
 
 const History = () => {
     const { history } = useSelector(state => state.places);

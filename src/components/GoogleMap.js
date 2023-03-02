@@ -1,12 +1,6 @@
-import { Card } from '@mui/material';
 import { useRef, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-
-import styled from '@emotion/styled';
-
-const MuiCard = styled(Card)({
-    borderRadius: "15px",
-});
+import { MuiCard } from '../styles/Global';
 
 const GoogleMap = () => {
     const { googleMaps, place } = useSelector(state => state.places);

@@ -1,4 +1,4 @@
-import { Badge, CircularProgress, Drawer, Fab, Grid, Grow, IconButton, Typography } from "@mui/material";
+import { Badge, Drawer, Fab, Grid, Grow, IconButton, Typography } from "@mui/material";
 import { Close, HistoryOutlined, HistoryRounded, MapOutlined } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 
@@ -85,47 +85,44 @@ const MuiDrawer = styled(Drawer)({
 });
 
 const App = () => {
-  const { history, loading } = useSelector(state => state.places);
+  const { history } = useSelector(state => state.places);
   const [open, setOpen] = useState(false);
 
   return (
     <Grid
       container
-      alignItems={loading ? "center" : "start"}
       justifyContent="center"
       sx={{ minHeight: "100vh" }}
     >
-      {loading ? <CircularProgress /> :
-        <Grow in={true}>
-          <Grid
-            container
-            direction="column"
-            alignItems="center"
-            gap={1}
-            sx={{ padding: "20px" }}
-          >
-            <MuiShadowTypography>
-              <MuiTypography>
-                <b>G</b><b>o</b><b>o</b><b>g</b><b>l</b><b>e</b>
-                <b> Places</b><b> A</b><b>u</b><b>t</b><b>o</b><b>c</b><b>o</b><b>mplete</b>
-              </MuiTypography>
-              <Typography>
-                <MapOutlined /> Google Places Autocomplete
-              </Typography>
-            </MuiShadowTypography>
-            <PlacesAutoComplete />
-            <GoogleMap />
-          </Grid>
-        </Grow>
-      }
-      <Grow in={!loading}>
+      <Grow in={true}>
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          gap={1}
+          sx={{ padding: "20px" }}
+        >
+          <MuiShadowTypography>
+            <MuiTypography>
+              <b>G</b><b>o</b><b>o</b><b>g</b><b>l</b><b>e</b>
+              <b> Places</b><b> A</b><b>u</b><b>t</b><b>o</b><b>c</b><b>o</b><b>mplete</b>
+            </MuiTypography>
+            <Typography>
+              <MapOutlined /> Google Places Autocomplete
+            </Typography>
+          </MuiShadowTypography>
+          <PlacesAutoComplete />
+          <GoogleMap />
+        </Grid>
+      </Grow>
+      <Grow in={true}>
         <MuiFloatButton size="medium" color="primary" aria-label="history" onClick={() => setOpen(true)}>
-          <Badge 
+          <Badge
             anchorOrigin={{
               vertical: 'top',
               horizontal: 'left',
             }}
-            badgeContent={history.length} 
+            badgeContent={history.length}
             color="warning"
             max={99}
           >
