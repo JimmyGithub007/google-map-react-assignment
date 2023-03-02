@@ -1,6 +1,7 @@
-import { Grid, Grow, Typography } from "@mui/material";
+import { Grid, Grow, ThemeProvider, Typography } from "@mui/material";
 import { MapOutlined } from "@mui/icons-material";
-import { MuiShadowTypography, MuiTypography } from "./styles/Global";
+import { MuiShadowTypography, MuiTypography, MuiLightTheme, MuiBodyGrid, MuiDarkTheme, MuiSwitch } from "./styles/Global";
+import { useState } from "react";
 
 import GoogleMap from "./components/GoogleMap";
 import PlacesAutoComplete from "./components/PlacesAutoComplete";
@@ -10,8 +11,10 @@ import withGoogleMaps from "./hoc/withGoogleMaps";
 import './styles/App.css';
 
 const App = () => {
-  return (
-    <Grid
+  const [ themeMode, setThemeMode ] = useState("light");
+
+  return (<ThemeProvider theme={themeMode === "light" ? MuiLightTheme : MuiDarkTheme}>
+    <MuiBodyGrid
       container
       justifyContent="center"
       sx={{ minHeight: "100vh" }}
@@ -24,6 +27,7 @@ const App = () => {
           gap={1}
           sx={{ padding: "20px" }}
         >
+          <MuiSwitch onChange={() => setThemeMode(themeMode === "light" ? "dark" : "light") } />
           <MuiShadowTypography>
             <MuiTypography>
               <b>G</b><b>o</b><b>o</b><b>g</b><b>l</b><b>e</b>
@@ -38,7 +42,8 @@ const App = () => {
         </Grid>
       </Grow>
       <HistoryDrawer />
-    </Grid>);
+    </MuiBodyGrid>
+  </ThemeProvider>);
 }
 
 export default withGoogleMaps(App);

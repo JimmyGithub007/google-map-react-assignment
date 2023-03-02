@@ -33,7 +33,6 @@ const PlacesAutoComplete = () => {
     return (<MuiAutoCompleteField
         inputRef={autoCompleteRef}
         fullWidth
-        label="Enter a location"
         onChange={e => setSearch(e.target.value) }
         placeholder="Enter a location"
         InputProps={{
