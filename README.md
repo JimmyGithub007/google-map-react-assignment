@@ -1,4 +1,4 @@
-# Maybank React Assignment
+# Google Map React Assignment
 
 An mobile responsive application which use Google Place Autocomplete to find places and show at map
 
