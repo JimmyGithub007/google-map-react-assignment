@@ -19,6 +19,7 @@ PC View
 ![image](https://github.com/JimmyGithub007/google-map-react-assignment/assets/47911072/00e96a36-5acb-447d-81a1-ca78d36d6e59)
 
 Mobile View
+
 ![image](https://github.com/JimmyGithub007/google-map-react-assignment/assets/47911072/d703b569-14bf-4d23-bc6e-72d7a94a1512)
 ![image](https://github.com/JimmyGithub007/google-map-react-assignment/assets/47911072/7ca7ebcc-bb42-4f78-b472-b84fc62621f1)
 
